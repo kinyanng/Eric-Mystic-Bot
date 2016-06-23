@@ -22,7 +22,7 @@ bot.on('message', function (msg) {
         rule.method = match[3];
         rule.content = match[4];
         rule.count = match[1].substring(8) || 0;
-        rule.createdBy = msg.chat.username;
+        rule.createdBy = msg.from.username;
 
         if (match[2][0] === '@') {
             rule.type = 'reply';
@@ -62,7 +62,7 @@ bot.on('message', function (msg) {
                                 console.log(error);
                             }
                             else {
-                                bot.sendMessage(chatId, '*' + results[index].content + '*',
+                                bot.sendMessage(chatId, '' + results[index].content + '',
                                     {
                                         parse_mode: 'Markdown',
                                         reply_to_message_id: msg.message_id
@@ -95,7 +95,7 @@ bot.on('message', function (msg) {
                                 console.log(error);
                             }
                             else {
-                                bot.sendMessage(chatId, '*' + candidates[index].content + '*',
+                                bot.sendMessage(chatId, '' + candidates[index].content + '',
                                     {
                                         parse_mode: 'Markdown',
                                         reply_to_message_id: msg.message_id
