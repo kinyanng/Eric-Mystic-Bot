@@ -1,4 +1,6 @@
 {
   "mongodb": "mongodb://localhost/eric_mystic_bot",
-  "api_key": "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefgh"
+  "api_key": "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefgh",
+  "rule_success_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-000",
+  "rule_failure_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-001"
 }

@@ -16,35 +16,45 @@ bot.on('message', function (msg) {
     var text = msg.text;
 
     // Add new rule
-    var match = /^@eric_mystic_bot( repeat \d|) if (@[a-z0-9_]{5,}|\/.+\/) (message) (.+)$/i.exec(text);
-    if (match && match.length > 0) {
-        var rule = new Rule();
-        rule.method = match[3];
-        rule.content = match[4];
-        rule.count = match[1].substring(8) || 0;
-        rule.createdBy = msg.from.username;
+    if (text && /^@eric_mystic_bot/.test(text)) {
+        var match = /^@eric_mystic_bot( repeat \d|) if (@[a-z0-9_]{5,}|\/.+\/) (message) (.+)$/i.exec(text);
+        if (match && match.length > 0) {
+            var rule = new Rule();
+            rule.method = match[3];
+            rule.content = match[4];
+            rule.count = match[1].substring(8) || 0;
+            rule.createdBy = msg.from.username;
 
-        if (match[2][0] === '@') {
-            rule.type = 'reply';
-            rule.condition = match[2].substring(1);
-        }
-
-        if (match[2][0] === '/') {
-            rule.type = 'send';
-            rule.condition = match[2].substring(1, match[2].length - 1);
-        }
-
-        rule.save(function (error) {
-            if (error) {
-                console.log(error);
+            if (match[2][0] === '@') {
+                rule.type = 'reply';
+                rule.condition = match[2].substring(1);
             }
-            else {
-                bot.sendSticker(chatId, 'BQADBQADPAADf47HAdmSv3VDIIAXAg',
-                    {
-                        reply_to_message_id: msg.message_id
-                    });
+
+            if (match[2][0] === '/') {
+                rule.type = 'send';
+                rule.condition = match[2].substring(1, match[2].length - 1);
             }
-        });
+
+            rule.save(function (error) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log('Rule added: ' + JSON.stringify(rule));
+                    bot.sendSticker(chatId, Config.rule_success_sticker_id,
+                        {
+                            reply_to_message_id: msg.message_id
+                        });
+                }
+            });
+        }
+        else {
+            // Syntax error
+            bot.sendSticker(chatId, Config.rule_failure_sticker_id,
+                {
+                    reply_to_message_id: msg.message_id
+                });
+        }
     }
     else {
         Rule.find({type: 'reply', condition: msg.from.username, count: {$gte: 0}})
@@ -107,5 +117,9 @@ bot.on('message', function (msg) {
             });
     }
 
-    console.log(JSON.stringify(msg));
+    require('./secret.js')(bot, msg);
+
+    if (!IS_PROD) {
+        console.log(JSON.stringify(msg));
+    }
 });
