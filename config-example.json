@@ -3,4 +3,6 @@
   "api_key": "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefgh",
   "rule_success_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-000",
   "rule_failure_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-001"
+  "rule_incomplete_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-002",
+  "rule_repeated_sticker_id": "ABCDEFGHIJKLMNOPQRSTUVWXYZ-003",
 }
